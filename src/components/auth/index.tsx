@@ -2,6 +2,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import { useAuth } from '../../Context/authContext';
 import RegisterForm from './Register';
 import LoginForm from './Login';
+import Dashboard from '../Dashboard';
 
 
 const Authentication = () => {
@@ -11,9 +12,10 @@ const Authentication = () => {
     <Routes>
       <Route
         path="/login"
-        element={currentUser ? <Navigate to="/dashboard" /> : <LoginForm />}
+        element={currentUser ? <Dashboard /> : <LoginForm />}
       />
-    <Route path="/register" element={<RegisterForm />} />
+    <Route path="/register" element={currentUser ? <Dashboard /> : <RegisterForm />} />
+    <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   );
 };
