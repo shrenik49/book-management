@@ -6,7 +6,7 @@ interface User {
 
 interface AuthContextProps {
   currentUser: User | null;
-  login: (email: string, password: string) => void;
+  login: (email: string, password: string) => boolean;
   register: (email: string, password: string) => void;
   logout: () => void;
 }
@@ -31,6 +31,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = (email: string, password: string) => {
     if (email === 'example@example.com' && password === 'password') {
       setCurrentUser({ email });
+      return true
+    }
+    else{
+      return false
     }
   };
 
