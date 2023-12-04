@@ -1,8 +1,9 @@
-import React, { FC} from "react";
+import React, { FC, useState } from "react";
 import { Input, PopupContainer, PopupHeading, PopupInner } from "./popupStyle";
 import { StyledButton } from "../Dashboard/DashboardStyle";
 import { Book } from "../Dashboard/Booklist";
 import { genres } from "../../Data/Data";
+import { ErrorMessageContainer } from "../auth/Login/loginStyle";
 
 interface PopupProps {
   closePopup: () => void;
@@ -17,7 +18,8 @@ const Popup: FC<PopupProps> = ({
   setNewBook,
   addNewBook,
 }) => {
-  
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -29,13 +31,18 @@ const Popup: FC<PopupProps> = ({
   };
 
   const handleAddBook = () => {
-    addNewBook();
-    closePopup();
+    if (!newBook.title || !newBook.author || !newBook.publicationYear || !newBook.genre) {
+      setErrorMessage("Error: Please fill in all fields.");
+    } else {
+      addNewBook();
+      closePopup();
+    }
   };
+
   return (
     <PopupContainer>
       <PopupInner className="popup_inner">
-        <PopupHeading>Add Boook</PopupHeading>
+        <PopupHeading>Add Book</PopupHeading>
         <Input
           type="text"
           placeholder="Book Name"
@@ -70,6 +77,9 @@ const Popup: FC<PopupProps> = ({
             </option>
           ))}
         </select>
+        {errorMessage && (
+                <ErrorMessageContainer>{errorMessage}</ErrorMessageContainer>
+              )}
         <StyledButton onClick={handleAddBook}>Add Book</StyledButton>
         <StyledButton onClick={closePopup}>Close</StyledButton>
       </PopupInner>

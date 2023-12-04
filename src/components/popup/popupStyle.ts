@@ -3,7 +3,7 @@ export const PopupContainer = styled.div`
   position: fixed;
   border-radius: 10px;
   width: 30%;
-  height: 70%;
+  height: auto;
   top: 0;
   left: 0;
   right: 0;
